@@ -47,7 +47,7 @@ namespace SpendShelf.BankTransactionsImport.Tests.TransactionsParser
 
         private Stream GetFileStream(string fileName)
         {
-            return File.Open($"TransactionsParser\\{fileName}", FileMode.Open);
+            return File.Open(Path.Combine("TransactionsParser", fileName), FileMode.Open);
         }
     }
 }
