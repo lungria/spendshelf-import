@@ -3,9 +3,9 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
 
-namespace SpendShelf.BankTransactionsImport
+namespace SpendShelf.BankTransactionsImport.Infrastructure.Extensions
 {
-    internal static class Extensions
+    internal static class ServiceCollectionExtensions
     {
         internal static IServiceCollection AddLogging(this IServiceCollection services)
         {

@@ -1,9 +1,9 @@
-using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using SpendShelf.BankTransactionsImport.Infrastructure.Extensions;
 using SpendShelf.BankTransactionsImport.TransactionsParser;
 
 namespace SpendShelf.BankTransactionsImport
@@ -24,9 +24,12 @@ namespace SpendShelf.BankTransactionsImport
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940.
         /// </summary>
+        /// <param name="services">Service collection.</param>
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddLogging();
+            services.AddControllers();
+            services.AddCors();
+            ServiceCollectionExtensions.AddLogging(services);
             services.AddSingleton<IBankTransactionsXlsParser, BankTransactionsXlsParser>();
             services.AddSingleton<IBankTransactionsDateParser, BankTransactionsDateParser>();
 
@@ -41,12 +44,11 @@ namespace SpendShelf.BankTransactionsImport
         /// <param name="app">Middleware builder.</param>
         public static void Configure(IApplicationBuilder app)
         {
+            app.UseSerilogRequestLogging();
+            app.UseCustomExceptionMiddleware();
+            app.UseCors();
             app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!").ConfigureAwait(false); });
-            });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }
