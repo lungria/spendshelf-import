@@ -10,7 +10,7 @@ namespace SpendShelf.BankTransactionsImport.Tests.TransactionsParser
     public class BankTransactionsXlsParserTests
     {
         [Fact]
-        public void Parse_When_Valid()
+        public void Parse_ParsesTransactionsCorrectly_WhenInputValid()
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             var parser = GetXlsParser();
@@ -27,7 +27,7 @@ namespace SpendShelf.BankTransactionsImport.Tests.TransactionsParser
         }
 
         [Fact]
-        public void Parse_When_NotValid()
+        public void Parse_ThrowException_WhenInputInvalid()
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             var parser = GetXlsParser();

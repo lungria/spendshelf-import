@@ -9,7 +9,7 @@ namespace SpendShelf.BankTransactionsImport.Tests.TransactionsParser
     {
         [Theory]
         [MemberData(nameof(Data))]
-        public void Parse_When_Valid(string value1, string value2, DateTime expected)
+        public void Parse_ParsesDateCorrectly_WhenInputValid(string value1, string value2, DateTime expected)
         {
             var bankTransactionsDateParser = new BankTransactionsDateParser();
             new DateTime();
