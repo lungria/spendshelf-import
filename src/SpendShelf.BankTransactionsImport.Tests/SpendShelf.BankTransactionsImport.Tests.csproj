@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>NU1701, SA1615, SA1633, CS1591, SA1600, SA1611, CS1573, CA1031</WarningsNotAsErrors>
+    <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
+    <NoWarn>SA1633, SA1200, SA1309, SA1101, CA1303, SA1028, CS8602, CA1062, CA2007, CA1000, CA2225, SA1623, SA1600, SA1003, CA1054, CA1056, CA1063, SA1206</NoWarn>  
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpendShelf.BankTransactionsImport\SpendShelf.BankTransactionsImport.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TransactionsParser\Invalid3TestTransactions.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TransactionsParser\Valid3TestTransactions.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
