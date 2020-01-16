@@ -7,7 +7,7 @@ namespace SpendShelf.BankTransactionsImport.Infrastructure.Extensions
 {
     internal static class ServiceCollectionExtensions
     {
-        internal static IServiceCollection AddLogging(this IServiceCollection services)
+        internal static IServiceCollection AddSerilogLogging(this IServiceCollection services)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()

@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -27,9 +26,9 @@ namespace SpendShelf.BankTransactionsImport
         /// <param name="services">Service collection.</param>
         public static void ConfigureServices(IServiceCollection services)
         {
+            services.AddSerilogLogging();
             services.AddControllers();
             services.AddCors();
-            ServiceCollectionExtensions.AddLogging(services);
             services.AddSingleton<IBankTransactionsXlsParser, BankTransactionsXlsParser>();
             services.AddSingleton<IBankTransactionsDateParser, BankTransactionsDateParser>();
 
