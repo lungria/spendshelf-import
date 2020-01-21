@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using ExcelDataReader;
 using Serilog;
 
@@ -26,12 +27,12 @@ namespace SpendShelf.BankTransactionsImport.TransactionsParser
         /// <summary>
         /// Parses file steam with bank transaction into object collection.
         /// </summary>
-        /// <param name="transactionsFileStream">Stream from xls file with transactions.</param>
+        /// <param name="transactionsFile">Data from xls file with transactions.</param>
         /// <returns>Transactions list.</returns>
-        public List<BankTransactionInfo> ParseTransactions(Stream transactionsFileStream)
+        public List<BankTransactionInfo> ParseTransactions(Stream transactionsFile)
         {
-            using var reader = ExcelReaderFactory.CreateReader(transactionsFileStream);
-
+            using var reader = ExcelReaderFactory.CreateReader(transactionsFile);
+            
             _logger.Information("Transaction parsing started");
 
             var result = reader.AsDataSet().Tables[0].Rows.OfType<DataRow>().Skip(2).Select((item, index) =>

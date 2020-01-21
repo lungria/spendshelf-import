@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using SpendShelf.BankTransactionsImport.Infrastructure.Extensions;
 using SpendShelf.BankTransactionsImport.TransactionsParser;
+using SpendShelf.BankTransactionsImport.TransactuinsProcessor;
 
 namespace SpendShelf.BankTransactionsImport
 {
@@ -31,6 +33,8 @@ namespace SpendShelf.BankTransactionsImport
             services.AddCors();
             services.AddSingleton<IBankTransactionsXlsParser, BankTransactionsXlsParser>();
             services.AddSingleton<IBankTransactionsDateParser, BankTransactionsDateParser>();
+            services.AddChannel();
+            services.AddHostedService<TransactionProcessorHostedService>();
 
             // IServiceCollection services
             // This needed to fix https://github.com/ExcelDataReader/ExcelDataReader/issues/241
