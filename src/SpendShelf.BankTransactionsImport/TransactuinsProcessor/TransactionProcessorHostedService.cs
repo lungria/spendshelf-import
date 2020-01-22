@@ -11,19 +11,16 @@ namespace SpendShelf.BankTransactionsImport.TransactuinsProcessor
 {
     public class TransactionProcessorHostedService : BackgroundService
     {
-        private readonly IServiceProvider _services;
         private readonly IBankTransactionsXlsParser _bankTransactionsXlsParser;
         private readonly ILogger _logger;
         private readonly ChannelReader<Stream> _channel;
 
         public TransactionProcessorHostedService(
             IBankTransactionsXlsParser bankTransactionsXlsParser,
-            IServiceProvider serviceProvider,
             ILogger logger,
             ChannelReader<Stream> channel)
         {
             _bankTransactionsXlsParser = bankTransactionsXlsParser;
-            _services = serviceProvider;
             _logger = logger;
             _channel = channel;
         }
@@ -38,7 +35,7 @@ namespace SpendShelf.BankTransactionsImport.TransactuinsProcessor
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e, "An unhandled exception occured in sqs bank transactuin parser");
+                    _logger.Error(e, "An unhandled exception occured in ParseTransactions");
                 }
             }
         }
