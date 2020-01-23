@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.IO;
+using System.Threading.Channels;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
@@ -19,6 +21,14 @@ namespace SpendShelf.BankTransactionsImport.Infrastructure.Extensions
                 .CreateLogger();
 
             services.AddSingleton<ILogger>(Log.Logger);
+            return services;
+        }
+
+        internal static IServiceCollection AddChannel(this IServiceCollection services)
+        {
+            services.AddSingleton<Channel<Stream>>(Channel.CreateUnbounded<Stream>(new UnboundedChannelOptions() { SingleReader = true }));
+            services.AddSingleton<ChannelReader<Stream>>(svc => svc.GetRequiredService<Channel<Stream>>().Reader);
+            services.AddSingleton<ChannelWriter<Stream>>(svc => svc.GetRequiredService<Channel<Stream>>().Writer);
             return services;
         }
     }
