@@ -5,6 +5,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using SpendShelf.BankTransactionsImport.TransactionsExport;
 using SpendShelf.BankTransactionsImport.TransactionsParser;
 
 namespace SpendShelf.BankTransactionsImport.TransactuinsProcessor
@@ -12,14 +13,17 @@ namespace SpendShelf.BankTransactionsImport.TransactuinsProcessor
     public class TransactionProcessorHostedService : BackgroundService
     {
         private readonly IBankTransactionsXlsParser _bankTransactionsXlsParser;
+        private readonly ITransactionsExporter _transactionsExporter;
         private readonly ILogger _logger;
         private readonly ChannelReader<Stream> _channel;
 
         public TransactionProcessorHostedService(
             IBankTransactionsXlsParser bankTransactionsXlsParser,
+            ITransactionsExporter transactionsExporter,
             ILogger logger,
             ChannelReader<Stream> channel)
         {
+            _transactionsExporter = transactionsExporter;
             _bankTransactionsXlsParser = bankTransactionsXlsParser;
             _logger = logger;
             _channel = channel;
@@ -31,7 +35,8 @@ namespace SpendShelf.BankTransactionsImport.TransactuinsProcessor
             {
                 try
                 {
-                    _bankTransactionsXlsParser.ParseTransactions(item);
+                    var transactions = _bankTransactionsXlsParser.ParseTransactions(item);
+                    await _transactionsExporter.SendMessage(transactions, cancellationToken);
                 }
                 catch (Exception e)
                 {
