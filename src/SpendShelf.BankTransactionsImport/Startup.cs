@@ -1,8 +1,12 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using SpendShelf.BankTransactionsImport.Infrastructure;
 using SpendShelf.BankTransactionsImport.Infrastructure.Extensions;
+using SpendShelf.BankTransactionsImport.TransactionsExport;
 using SpendShelf.BankTransactionsImport.TransactionsParser;
 using SpendShelf.BankTransactionsImport.TransactuinsProcessor;
 
@@ -33,6 +37,18 @@ namespace SpendShelf.BankTransactionsImport
             services.AddSingleton<IBankTransactionsXlsParser, BankTransactionsXlsParser>();
             services.AddSingleton<IBankTransactionsDateParser, BankTransactionsDateParser>();
             services.AddChannel();
+            services.Configure<MqttClientConfig>(x =>
+            {
+                var url = Environment.GetEnvironmentVariable("MQTT_URL");
+                if (string.IsNullOrEmpty(url))
+                {
+                    throw new KeyNotFoundException("MQTT_URL not found");
+                }
+
+                x.ServerUrl = url;
+            });
+            services.AddMqttClient();
+            services.AddSingleton<ITransactionsExporter, TransactionsExporter>();
             services.AddHostedService<TransactionProcessorHostedService>();
 
             // IServiceCollection services

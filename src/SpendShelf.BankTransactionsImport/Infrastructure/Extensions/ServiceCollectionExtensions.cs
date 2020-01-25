@@ -1,6 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Channels;
 using Microsoft.Extensions.DependencyInjection;
+using MQTTnet;
+using MQTTnet.Client;
+using MQTTnet.Client.Options;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
@@ -30,6 +34,11 @@ namespace SpendShelf.BankTransactionsImport.Infrastructure.Extensions
             services.AddSingleton<ChannelReader<Stream>>(svc => svc.GetRequiredService<Channel<Stream>>().Reader);
             services.AddSingleton<ChannelWriter<Stream>>(svc => svc.GetRequiredService<Channel<Stream>>().Writer);
             return services;
+        }
+
+        internal static IServiceCollection AddMqttClient(this IServiceCollection services)
+        {
+            return services.AddSingleton<IMqttClient>(new MqttFactory().CreateMqttClient());
         }
     }
 }
