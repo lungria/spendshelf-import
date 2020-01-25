@@ -44,7 +44,5 @@ namespace SpendShelf.BankTransactionsImport.TransactuinsProcessor
                 }
             }
         }
-        
-        // execute disconnect on cancel
     }
 }
