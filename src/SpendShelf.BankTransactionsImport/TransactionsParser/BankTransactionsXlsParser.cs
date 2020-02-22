@@ -44,7 +44,7 @@ namespace SpendShelf.BankTransactionsImport.TransactionsParser
                         DateTimeUtc = _bankTransactionsDateParser.Parse((string)item[0], (string)item[1]),
                         Type = (string)item[2],
                         Merchant = (string)item[4],
-                        Amount = (int)(100m*Convert.ToDecimal(item[7], null)),
+                        Amount = (int)(100m*Convert.ToDecimal(item[5], null)),
                         Currency = (string)item[8],
                     };
                 }
