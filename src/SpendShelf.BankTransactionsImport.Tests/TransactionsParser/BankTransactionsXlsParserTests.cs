@@ -22,7 +22,7 @@ namespace SpendShelf.BankTransactionsImport.Tests.TransactionsParser
             Assert.Equal("Кафе, бари, ресторани", secondItem.Type);
             Assert.Equal("Кафе: КАФЕ", secondItem.Merchant);
             Assert.Equal("грн", secondItem.Currency);
-            Assert.Equal(202.00m, secondItem.Amount);
+            Assert.Equal(20200, secondItem.Amount);
             Assert.Equal(DateTime.MinValue, secondItem.DateTimeUtc);
         }
 
