@@ -39,10 +39,10 @@ namespace SpendShelf.BankTransactionsImport
             services.AddChannel();
             services.Configure<MqttClientConfig>(x =>
             {
-                var url = Environment.GetEnvironmentVariable("MQTT_URL");
+                var url = Environment.GetEnvironmentVariable("SPENDSHELF_MQTT_HOST");
                 if (string.IsNullOrEmpty(url))
                 {
-                    throw new KeyNotFoundException("MQTT_URL not found");
+                    throw new KeyNotFoundException("SPENDSHELF_MQTT_HOST not found");
                 }
 
                 x.ServerUrl = url;
