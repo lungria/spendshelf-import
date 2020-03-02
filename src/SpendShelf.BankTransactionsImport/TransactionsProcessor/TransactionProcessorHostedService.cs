@@ -8,7 +8,7 @@ using Serilog;
 using SpendShelf.BankTransactionsImport.TransactionsExport;
 using SpendShelf.BankTransactionsImport.TransactionsParser;
 
-namespace SpendShelf.BankTransactionsImport.TransactuinsProcessor
+namespace SpendShelf.BankTransactionsImport.TransactionsProcessor
 {
     public class TransactionProcessorHostedService : BackgroundService
     {
